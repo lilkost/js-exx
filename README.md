@@ -141,7 +141,7 @@ npm install imask
 <script src="https://unpkg.com/imask"></script>
 ```
 
-<pre>
+<code>
   const phoneMask = () => {
     const nodes = document.querySelectorAll(".input-phone-mask");
 
@@ -159,4 +159,4 @@ npm install imask
 }
 
 export default phoneMask;
-</pre>
+</code>
