@@ -161,7 +161,7 @@ npm install imask
 </pre>
 
 <h2>
-  dropdown
+ &#8597; dropdown
 </h2>
 
 <pre>
