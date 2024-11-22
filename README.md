@@ -135,7 +135,10 @@ export default modal;
 </h2>
 
 ```
-npm install imask <script src="https://unpkg.com/imask"></script>
+npm install imask
+```
+```
+<script src="https://unpkg.com/imask"></script>
 ```
 
 <pre>
