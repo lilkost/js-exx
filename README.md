@@ -1,6 +1,7 @@
-```
-&#128190; Конпирование текста
-```
+<h2>
+  &#128190; Конпирование текста
+</h2>
+
 <pre>
   const copyLink = () => {
     const node = document.querySelectorAll(".copy-link");
