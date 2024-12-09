@@ -296,4 +296,105 @@ export default accordions;
   function numberWithSpaces(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
   }
-</code>
+</pre>
+
+<h2>
+  	&#128722; Корзина
+</h2>
+
+<pre>
+  // функция для работы с кнопками в элементе корзины
+const changeStateItem = (item) => {
+    // получение кнопок можно поменять на классы спокойно
+    const btnP = item.querySelectorAll(".basket__item-counts-btn")[1],
+        btnM = item.querySelectorAll(".basket__item-counts-btn")[0],
+        countInput = item.querySelector(".basket__item-count")
+
+    btnP.addEventListener("click", ()=>countChangeItem("+", item));
+    btnM.addEventListener("click", ()=>countChangeItem("-", item));
+    countInput.addEventListener("input", (e)=>countChangeItem("input", item));
+}
+
+const countChangeItem = (btn, item) => {
+    let btnState = String(btn).trim().toLowerCase();
+    let count = Number(item.getAttribute("data-count"));
+    const price = Number(item.getAttribute("data-price"));
+    const nodePrice = item.querySelector(".basket__item-price");
+    const itemCountInput = item.querySelector(".basket__item-count");
+    // получение кнопок можно поменять на классы спокойно
+    const btnMinus = item.querySelectorAll(".basket__item-counts-btn")[0];
+    const inputNode = item.querySelector(".basket__item-count");
+
+    const plus = () =>{
+        count+=1;
+
+        const currentPrice = qsToString(count * price);
+
+        item.setAttribute("data-count", qsToString(count));
+        item.setAttribute("data-current-price", currentPrice);
+
+        nodePrice.innerText = `${numberWithSpaces(currentPrice)} ₽`;
+
+        itemCountInput.value = count;
+
+        btnMinus.disabled = false;
+        btnMinus.classList.add("is-active");
+    }
+
+    const minus = () => {
+        count-=1;
+        
+        const currentPrice = qsToString(count * price);
+
+        item.setAttribute("data-count", qsToString(count));
+        item.setAttribute("data-current-price", currentPrice);
+
+        nodePrice.innerText = `${numberWithSpaces(currentPrice)} ₽`;
+
+        itemCountInput.value = count;
+
+        if(count === 1) {
+            btnMinus.disabled = true;
+            btnMinus.classList.remove("is-active");
+            return;
+        }
+    }
+
+    const input = () => {
+        let valueIn = inputNode.value;
+
+        if(valueIn <= 1) {
+            inputNode.value = 1;
+            valueIn = 1;
+            btnMinus.disabled = true;
+            btnMinus.classList.remove("is-active");
+        } else if(valueIn > 1) {
+            btnMinus.disabled = false;
+            btnMinus.classList.add("is-active");
+        }
+        
+        const currentPrice = qsToString(valueIn * price);
+
+        item.setAttribute("data-count", qsToString(valueIn));
+        item.setAttribute("data-current-price", currentPrice);
+
+        nodePrice.innerText = `${numberWithSpaces(currentPrice)} ₽`;
+    }
+
+    switch (btnState) {
+        case "+":
+            plus();
+            break;
+        case "-":
+            minus();
+            break;
+        case "input":
+            input();
+            break;
+        default:
+            alert( "Нет таких значений" );
+    }
+}
+
+basketItem.forEach(item=> changeStateItem(item));
+</pre>
