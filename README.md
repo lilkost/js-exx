@@ -287,3 +287,13 @@ npm install imask
 
 export default accordions;
 </pre>
+
+<h2>
+&#128287; Маска для телефона
+</h2>
+
+<pre>
+  function numberWithSpaces(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+  }
+</pre>
