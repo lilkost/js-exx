@@ -292,7 +292,7 @@ export default accordions;
 &#128287; Разделение числа на разряды
 </h2>
 
-<code>
+<pre>
   function numberWithSpaces(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
   }
