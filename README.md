@@ -398,3 +398,24 @@ const countChangeItem = (btn, item) => {
 
 basketItem.forEach(item=> changeStateItem(item));
 </pre>
+
+<h2>
+  &#128065;&#65039;&#8205;&#128488;&#65039; Фокусировка на объекте
+</h2>
+
+<pre>
+  input.onblur = function() {
+  if (!input.value.includes('@')) { // не email
+    input.classList.add('invalid');
+    error.innerHTML = 'Пожалуйста, введите правильный email.'
+  }
+};
+
+input.onfocus = function() {
+  if (this.classList.contains('invalid')) {
+    // удаляем индикатор ошибки, т.к. пользователь хочет ввести данные заново
+    this.classList.remove('invalid');
+    error.innerHTML = "";
+  }
+};
+</pre>
