@@ -447,3 +447,34 @@ input.onfocus = function() {
         getCurrentOpacity();
     }, 1000);
 </pre>
+
+<h2>
+  Слежка за тем, появился ли блок в области видимости или нет
+</h2>
+
+```
+```JavaScript
+  // за каким блоком следить
+  const targetBlock = document.querySelector('#targetBlock');
+  let isInViewport = false;
+
+  const callback = (entries) => {
+      entries.forEach(entry => {
+          if (entry.isIntersecting && !isInViewport) {
+              console.log('Вы достигли блока!');
+              isInViewport = true;
+          } else if (!entry.isIntersecting && isInViewport) {
+              console.log('Вы покинули блок!');
+              isInViewport = false;
+          }
+      });
+  };
+
+  
+  const observer = new IntersectionObserver(callback);
+  
+  if (targetBlock) {
+      observer.observe(targetBlock);
+  }
+```
+```
