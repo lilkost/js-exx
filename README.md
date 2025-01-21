@@ -454,6 +454,7 @@ input.onfocus = function() {
 
 
 ```markdown
+```javascript
   // за каким блоком следить
   const targetBlock = document.querySelector('#targetBlock');
   let isInViewport = false;
@@ -476,4 +477,5 @@ input.onfocus = function() {
   if (targetBlock) {
       observer.observe(targetBlock);
   }
+```
 ```
