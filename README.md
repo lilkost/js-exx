@@ -452,8 +452,9 @@ input.onfocus = function() {
   Слежка за тем, появился ли блок в области видимости или нет
 </h2>
 
-```
-```JavaScript
+
+```markdown
+```javascript
   // за каким блоком следить
   const targetBlock = document.querySelector('#targetBlock');
   let isInViewport = false;
