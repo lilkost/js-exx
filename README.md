@@ -449,12 +449,11 @@ input.onfocus = function() {
 </pre>
 
 <h2>
-  Слежка за тем, появился ли блок в области видимости или нет
+  &#128083; Слежка за тем, появился ли блок в области видимости или нет
 </h2>
 
 
 ```markdown
-```javascript
   // за каким блоком следить
   const targetBlock = document.querySelector('#targetBlock');
   let isInViewport = false;
@@ -477,5 +476,4 @@ input.onfocus = function() {
   if (targetBlock) {
       observer.observe(targetBlock);
   }
-```
 ```
