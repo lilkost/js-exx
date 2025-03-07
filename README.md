@@ -483,6 +483,7 @@ input.onfocus = function() {
 <h2>
   	&#127760; Определение OS у пользователя
 </h2>
+
 ```javascript
   function setOSClassOnBody() {
       const userAgent = window.navigator.userAgent;
