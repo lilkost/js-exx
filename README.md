@@ -453,7 +453,7 @@ input.onfocus = function() {
 </h2>
 
 
-```markdown
+
 ```javascript
   // за каким блоком следить
   const targetBlock = document.querySelector('#targetBlock');
@@ -478,4 +478,8 @@ input.onfocus = function() {
       observer.observe(targetBlock);
   }
 ```
-```
+
+
+<h2>
+  &#128083; Определение OS у пользователя
+</h2>
