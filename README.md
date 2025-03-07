@@ -481,5 +481,32 @@ input.onfocus = function() {
 
 
 <h2>
-  &#128083; Определение OS у пользователя
+  	&#127760; Определение OS у пользователя
 </h2>
+```javascript
+  function setOSClassOnBody() {
+      const userAgent = window.navigator.userAgent;
+      let osClass = "";
+  
+      if (userAgent.indexOf("Win") !== -1) {
+          osClass = "os-windows";
+      } else if (userAgent.indexOf("Mac") !== -1) {
+          osClass = "os-macos";
+      } else if (userAgent.indexOf("X11") !== -1 || userAgent.indexOf("Linux") !== -1) {
+          osClass = "os-linux";
+      } else if (userAgent.indexOf("Android") !== -1) {
+          osClass = "os-android";
+      } else if (userAgent.indexOf("like Mac") !== -1) {
+          osClass = "os-ios";
+      } else {
+          osClass = "os-unknown"; // На случай, если ОС не распознана
+      }
+  
+      // Добавляем класс к тегу body
+      document.body.classList.add(osClass);
+  }
+  
+  // Вызываем функцию при загрузке страницы
+  document.addEventListener("DOMContentLoaded",()=>setOSClassOnBody());
+  }
+```
