@@ -520,8 +520,19 @@ input.onfocus = function() {
     // массив всех слайдеров
     // для создания простых слайдеров без сложной логики
     const sliders = [
-        [
-          
+        // пример слайдера
+           [
+            document.querySelector(".what-doing__slider"),
+            {
+                direction: 'horizontal',
+                loop: true,
+                navigation: {
+                    nextEl: '.what-doing__slider-btn_next',
+                    prevEl: '.what-doing__slider-btn_prev',
+                },
+                slidesPerView: 1.81559,
+            }
+        ],
     ]
     // функция конструктор для создания сладеров
     const createSlider = (node, options) => {
