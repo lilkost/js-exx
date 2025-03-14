@@ -2,7 +2,7 @@
   &#128190; Копирование текста
 </h2>
 
-<pre>
+```javascript
   const copyLink = () => {
     const node = document.querySelectorAll(".copy-link");
 
@@ -31,13 +31,13 @@
 }
 
 export default copyLink
-</pre>
+```
 
 <h2>
  &#127490; Модальные окна
 </h2>
 
-<pre>
+```javascript
   const modal = () => {
     // массив всех модалок на странице
     // 1. Кнопка/Кнопки открытия
@@ -128,7 +128,7 @@ export default copyLink
 }
 
 export default modal;
-</pre>
+```
 
 <h2>
  &#128241; Маска для телефона
@@ -141,7 +141,7 @@ npm install imask
 <script src="https://unpkg.com/imask"></script>
 ```
 
-<pre>
+```javascript
     const phoneMask = () => {
     const nodes = document.querySelectorAll(".input-phone-mask");
       if(!nodes) return;
@@ -158,13 +158,13 @@ npm install imask
     }
 
   export default phoneMask;
-</pre>
+```
 
 <h2>
  &#8597; dropdown
 </h2>
 
-<pre>
+```javascript
   const accordions = () => {
     // ===================================
 
@@ -286,23 +286,23 @@ npm install imask
 }
 
 export default accordions;
-</pre>
+```
 
 <h2>
 &#128287; Разделение числа на разряды
 </h2>
 
-<pre>
+```javascript
   function numberWithSpaces(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
   }
-</pre>
+```
 
 <h2>
   	&#128722; Корзина
 </h2>
 
-<pre>
+```javascript
   // функция для работы с кнопками в элементе корзины
 const changeStateItem = (item) => {
     // получение кнопок можно поменять на классы спокойно
@@ -397,13 +397,13 @@ const countChangeItem = (btn, item) => {
 }
 
 basketItem.forEach(item=> changeStateItem(item));
-</pre>
+```
 
 <h2>
   &#128065;&#65039;&#8205;&#128488;&#65039; Фокусировка на объекте
 </h2>
 
-<pre>
+```javascript
   input.onblur = function() {
   if (!input.value.includes('@')) { // не email
     input.classList.add('invalid');
@@ -418,7 +418,8 @@ input.onfocus = function() {
     error.innerHTML = "";
   }
 };
-</pre>
+```
+
 <h2>
   &#128510; Замена изображений при перетаскивании ползунка
 </h2>
@@ -435,7 +436,7 @@ input.onfocus = function() {
   Получить текущее значение анимации
 </h2>
 
-<pre>
+```javascript
   // Функция для получения текущего значения свойства
     function getCurrentOpacity() {
         const currentOpacity = window.getComputedStyle(image).rotate;
@@ -446,7 +447,7 @@ input.onfocus = function() {
     const intervalId = setInterval(() => {
         getCurrentOpacity();
     }, 1000);
-</pre>
+```
 
 <h2>
   &#128083; Слежка за тем, появился ли блок в области видимости или нет
