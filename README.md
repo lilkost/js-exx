@@ -559,3 +559,29 @@ input.onfocus = function() {
         });
     }
 ```
+
+<h2>
+  &#128506; Запрет действия с картами
+</h2>
+
+```css
+.parent-map:not(.is-active) * {
+    pointer-events: none;
+}
+```
+
+```javascript
+const scrollMap = () =>{
+    // обертка карты
+    const wrapperMap = document.querySelector(".parent-map");
+
+    if(!wrapperMap) return; 
+
+    // действия на странице
+    document.addEventListener("click", (event) => {
+        wrapperMap.classList.toggle("is-active", event.target === wrapperMap);
+    });
+}
+
+export default scrollMap;
+```
