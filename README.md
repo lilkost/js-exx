@@ -646,6 +646,9 @@ export default scrollMap;
     transition: opacity 300ms linear;
     opacity: 1;
 }
+.coockie-modal.is-hidden {
+    display: none !important;
+}
 
 @keyframes leftPos {
 	0% {
