@@ -585,3 +585,94 @@ const scrollMap = () =>{
 
 export default scrollMap;
 ```
+
+<h2>
+  &#127850; Модальное окно с cookie
+</h2>
+
+
+```PHP
+<? if($_COOKIE['is_show_modal_coockie'] !== 'Y') {?>
+    <div class="coockie-modal">
+        <p class="coockie-modal__text">
+            Мы используем файлы cookie для улучшения работы сайта, пользуясь сайтом вы соглашаетесь с <a href="https://malt.ru/usloviya-obrabotki-personalnykh-dannykh/">политикой использования cookie</a>
+        </p>
+        <button class="coockie-modal__btn" type="button" id="coockieModalBtn">Хорошо</button>
+    </div>
+<?}?>
+```
+
+```css
+.coockie-modal {
+    max-width: 300px;
+    border-radius: 20px;
+    background-color: #000;
+    padding: 25px;
+    position: fixed;
+    z-index: 100;
+    bottom: 3%;
+    animation: 2.5s linear 0s forwards alternate leftPos;
+}
+.coockie-modal__text {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 30px;
+}
+.coockie-modal__text a {
+    color: currentColor;
+    transition: color 300ms linear;
+}
+
+.coockie-modal__btn {
+    max-width: 100%;
+    width: 100%;
+    font-size: 16px;
+    line-height: 40px;
+    font-weight: 400;
+    color: white;
+    text-transform: uppercase;
+    display: flex
+;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(#75a526, #8bbc3e);
+    padding: 0 20px;
+    border-radius: 25px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    transition: opacity 300ms linear;
+    opacity: 1;
+}
+
+@keyframes leftPos {
+	0% {
+		left: -100%;
+		opacity: 0;
+	}
+	100% {
+		left: 3%;
+		opacity: 1;
+	}
+}
+```
+```JS
+const modal = document.querySelector(".coockie-modal");
+
+if(modal){
+    const modalCLose = modal.querySelector(".coockie-modal__btn");
+
+    const setItemCoockie = () => {
+        let date = new Date(Date.now() + 31536000000);
+        date = date.toUTCString();
+
+        document.cookie = "is_show_modal_coockie=Y;max-age=31536000000";
+
+        modal.classList.add("is-hidden");
+    }
+
+    modalCLose.addEventListener("click", ()=>setItemCoockie());
+}
+```
