@@ -679,3 +679,15 @@ if(modal){
     modalCLose.addEventListener("click", ()=>setItemCoockie());
 }
 ```
+
+<h2>
+  &#128357; Получение даты
+</h2>
+
+```JS
+new Intl.DateTimeFormat('en-US', {
+        year: "numeric",
+        day: "numeric",
+        month: "short",
+    })
+```
