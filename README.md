@@ -689,5 +689,5 @@ new Intl.DateTimeFormat('en-US', {
         year: "numeric",
         day: "numeric",
         month: "short",
-    })
+    }).format(date);
 ```
