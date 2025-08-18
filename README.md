@@ -691,3 +691,91 @@ new Intl.DateTimeFormat('en-US', {
         month: "short",
     }).format(date);
 ```
+
+<h2>
+  	&#127754; Бегущая строка на ваниле
+</h2>
+
+```CSS
+ .marquee {
+      /* Скорость: чем больше время — тем медленнее прокрутка */
+      --marquee-duration: 20s;
+
+      /* Направление: 1 — слева направо? (на деле это «влево»),
+         -1 — наоборот (вправо). Подробнее ниже. */
+      --marquee-direction: 1;
+
+      /* Отступы между элементами внутри группы */
+      --marquee-gap: 2rem;
+
+      position: relative;
+      overflow: hidden;
+      display: block;
+      line-height: 1;
+      background: #0b0c10;
+      color: #fff;
+      font: 16px/1.2 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      padding: 10px 0;
+
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+              mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+    }
+
+    .marquee__track {
+      display: flex;
+      width: max-content;
+      will-change: transform;  
+      animation: marquee var(--marquee-duration) linear infinite;
+    }
+
+
+    .marquee:hover .marquee__track,
+    .marquee:focus-within .marquee__track {
+      animation-play-state: paused;
+    }
+
+    .marquee__group {
+      display: flex;
+      align-items: center;
+    }
+
+    .marquee__item {
+      white-space: nowrap;
+      margin-right: var(--marquee-gap);
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+    }
+    .marquee__item:last-child { margin-right: 0; }
+
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(calc(-50% * var(--marquee-direction))); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .marquee__track { animation: none; }
+    }
+```
+
+```HTML
+<div class="marquee" style="--marquee-duration: 18s; --marquee-direction: 1;" aria-label="Горячие скидки до 50 процентов. Бесплатная доставка от трёх тысяч рублей. Новые поступления каждую неделю.">
+    <div class="marquee__track">
+
+      <!-- Группа №1 -->
+      <div class="marquee__group">
+        <div class="marquee__item">123</div>
+		<div class="marquee__item">123</div>
+		<div class="marquee__item">123</div>
+      </div>
+
+      <!-- Группа №2 (строго идентична первой!) -->
+      <div class="marquee__group" aria-hidden="true">
+        <div class="marquee__item">123</div>
+		<div class="marquee__item">123</div>
+		<div class="marquee__item">123</div>
+      </div>
+    </div>
+  </div>
+```
