@@ -111,7 +111,7 @@ export default copyLink
             // проверка при клике в любое место на странице
             // если корневой эл. или тот по которому было нажатие соответсвует классу аккордеона
             // тогда оставлять класс, в противном случае класс удаляется
-            if(!event.target.closest(`.${modal.classList[0]}`)) modal.classList.remove(activeClass);
+            if(event?.target?.classList?.value?.includes('modal-parent') && modal) closeModal(modal,activeClass);
         });
         // скрытие блока по нажатию на кнопку ESC
         window.addEventListener("keydown", (event)=> {
