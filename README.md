@@ -779,3 +779,341 @@ new Intl.DateTimeFormat('en-US', {
     </div>
   </div>
 ```
+<h2>
+  	&#127754; Слайдер без использования библиотек
+</h2>
+
+```HTML
+	<div class="slider">
+	    <div class="slider-track">
+	      <div class="slide">1</div>
+	      <div class="slide">2</div>
+	      <div class="slide">3</div>
+	      <div class="slide">4</div>
+	    </div>
+	    <button class="slider-btn prev">‹</button>
+	    <button class="slider-btn next">›</button>
+	  </div>
+	  <div class="pagination"></div>
+```
+
+```CSS
+    .slider {
+      position: relative;
+      width: 80%;
+      overflow: hidden;
+    }
+
+    .slider-track {
+      display: flex;
+      transition: transform 0.5s ease;
+    }
+
+    .slide {
+      min-width: calc(100% / 3);
+      flex-shrink: 0;
+      background: #ddd;
+      border-radius: 12px;
+      margin: 0 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 24px;
+      font-weight: bold;
+      height: 200px;
+    }
+
+    /* 2 слайда на средних */
+    @media (max-width: 992px) {
+      .slide {
+        min-width: calc(100% / 2);
+      }
+    }
+
+    /* 1 слайд на мобильных */
+    @media (max-width: 600px) {
+      .slide {
+        min-width: 100%;
+      }
+    }
+
+    .slider-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.5);
+      border: none;
+      color: #fff;
+      font-size: 20px;
+      padding: 10px 15px;
+      cursor: pointer;
+      border-radius: 50%;
+    }
+
+    .prev {
+      left: 10px;
+    }
+
+    .next {
+      right: 10px;
+    }
+
+    .pagination {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 18px;
+    }
+```
+<p>Стандартный слайдер</p>
+
+```JS
+  const track = document.querySelector('.slider-track');
+    const slides = document.querySelectorAll('.slide');
+    const prevBtn = document.querySelector('.prev');
+    const nextBtn = document.querySelector('.next');
+    const pagination = document.querySelector('.pagination');
+
+    let index = 0;
+    let slidesToShow = getSlidesToShow();
+    const totalSlides = slides.length;
+    let autoPlayInterval;
+
+    function getSlidesToShow() {
+      if (window.innerWidth <= 600) return 1;
+      if (window.innerWidth <= 992) return 2;
+      return 3;
+    }
+
+    function updateSlider() {
+      const slideWidth = slides[0].offsetWidth + 20; // ширина + margin
+      track.style.transform = `translateX(-${index * slideWidth}px)`;
+      pagination.textContent = `${Math.floor(index / slidesToShow) + 1} / ${Math.ceil(totalSlides / slidesToShow)}`;
+    }
+
+    function nextSlide() {
+      index += slidesToShow;
+      if (index >= totalSlides) index = 0; // зацикливание
+      updateSlider();
+    }
+
+    function prevSlide() {
+      index -= slidesToShow;
+      if (index < 0) {
+        // идём в конец
+        index = (Math.ceil(totalSlides / slidesToShow) - 1) * slidesToShow;
+      }
+      updateSlider();
+    }
+
+    function startAutoplay() {
+      autoPlayInterval = setInterval(nextSlide, 4000);
+    }
+
+    function stopAutoplay() {
+      clearInterval(autoPlayInterval);
+    }
+
+    nextBtn.addEventListener('click', () => {
+      stopAutoplay();
+      nextSlide();
+      startAutoplay();
+    });
+
+    prevBtn.addEventListener('click', () => {
+      stopAutoplay();
+      prevSlide();
+      startAutoplay();
+    });
+
+    window.addEventListener('resize', () => {
+      slidesToShow = getSlidesToShow();
+      index = 0; // сбрасываем позицию при ресайзе
+      updateSlider();
+    });
+
+    // init
+    updateSlider();
+    startAutoplay();
+```
+
+<p>Слайдер для мобилки</p>
+
+```CSS
+ .slider {
+      position: relative;
+      overflow: hidden;
+      width: 100vw;
+    }
+
+    .slider-track {
+      display: flex;
+      transition: transform 0.5s ease;
+      gap: 10px; /* отступы между слайдами */
+    }
+
+    .slide {
+      flex: 0 0 100vw; /* ширина = 100vw */
+      height: 200px;
+      border-radius: 12px;
+      background: #ddd;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .slider-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.5);
+      border: none;
+      color: #fff;
+      font-size: 20px;
+      padding: 10px 15px;
+      cursor: pointer;
+      border-radius: 50%;
+      z-index: 2;
+    }
+
+    .prev { left: 10px; }
+    .next { right: 10px; }
+
+    .pagination {
+      text-align: center;
+      margin: 15px 0;
+    }
+
+    .bullet {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #bbb;
+      margin: 0 5px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    .bullet.active {
+      background: #333;
+      transform: scale(1.2);
+    }
+
+    /* На экранах >= 480px показываем все слайды */
+    @media (min-width: 480px) {
+      .slider-track {
+        transform: none !important;
+        transition: none !important;
+        flex-wrap: wrap;
+      }
+      .slide {
+        flex: 1 1 calc(33% - 10px); /* например сетка 3 в ряд */
+      }
+      .slider-btn, .pagination {
+        display: none !important;
+      }
+    }
+```
+```JS
+const track = document.querySelector('.slider-track');
+const slides = document.querySelectorAll('.slide');
+const prevBtn = document.querySelector('.prev');
+const nextBtn = document.querySelector('.next');
+const pagination = document.querySelector('.pagination');
+
+let index = 0;
+const totalSlides = slides.length;
+let bullets = [];
+
+function initSlider() {
+  if (window.innerWidth < 480) {
+    pagination.innerHTML = "";
+    for (let i = 0; i < totalSlides; i++) {
+      const bullet = document.createElement('span');
+      bullet.classList.add('bullet');
+      if (i === 0) bullet.classList.add('active');
+      bullet.addEventListener('click', () => goToSlide(i));
+      pagination.appendChild(bullet);
+    }
+    bullets = document.querySelectorAll('.bullet');
+
+    prevBtn.style.display = "block";
+    nextBtn.style.display = "block";
+    updateSlider();
+
+    enableSwipe(); // подключаем свайпы
+  } else {
+    track.style.transform = "none";
+    pagination.innerHTML = "";
+    prevBtn.style.display = "none";
+    nextBtn.style.display = "none";
+  }
+}
+
+function updateSlider() {
+  if (window.innerWidth >= 480) return;
+  const slideWidth = slides[0].offsetWidth + 10; // учитываем gap
+  track.style.transform = `translateX(-${index * slideWidth}px)`;
+
+  bullets.forEach(b => b.classList.remove('active'));
+  if (bullets[index]) bullets[index].classList.add('active');
+
+  prevBtn.disabled = index === 0;
+  nextBtn.disabled = index === totalSlides - 1;
+}
+
+function nextSlide() {
+  if (index < totalSlides - 1) {
+    index++;
+    updateSlider();
+  }
+}
+
+function prevSlide() {
+  if (index > 0) {
+    index--;
+    updateSlider();
+  }
+}
+
+function goToSlide(i) {
+  index = i;
+  updateSlider();
+}
+
+nextBtn.addEventListener('click', nextSlide);
+prevBtn.addEventListener('click', prevSlide);
+
+window.addEventListener('resize', () => {
+  index = 0;
+  initSlider();
+});
+
+// ========== свайпы ==========
+function enableSwipe() {
+  let startX = 0;
+  let endX = 0;
+
+  track.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].clientX;
+  });
+
+  track.addEventListener('touchend', (e) => {
+    endX = e.changedTouches[0].clientX;
+    const deltaX = endX - startX;
+
+    if (Math.abs(deltaX) > 50) { // порог, чтобы избежать ложных срабатываний
+      if (deltaX < 0) {
+        nextSlide(); // свайп влево → следующий слайд
+      } else {
+        prevSlide(); // свайп вправо → предыдущий слайд
+      }
+    }
+  });
+}
+
+// init
+initSlider();
+```
