@@ -36,41 +36,55 @@ export default copyLink
 <h2>
  &#127490; Модальные окна
 </h2>
+```scss
+.modal{
+	left: -200vw;
+    &__inner {
+        position: relative;
+
+        transform: translateY(50px);
+        opacity: 0;
+        will-change: transform;
+
+        transition: 
+            transform $t-base, 
+            opacity 200ms ease-in-out
+        ;
+    }
+	    &.is-open {
+        left: 0;
+        .modal__inner{
+            opacity: 1;
+            transform: translateY(0px);
+        }
+    }
+    &.is-back-animate{
+        .modal__inner{
+            opacity: 0;
+            transform: translateY(50px);
+        }
+    }
+}
+```
 
 ```javascript
   const modal = () => {
-    // массив всех модалок на странице
+    // Массив всех модалок на странице
     // 1. Кнопка/Кнопки открытия
     // 2. Модальное окно
     // 3. Кнопка скрытия
     // 4. Активный класс
+    // 5. У родительского блока с модалкой должен быть класс - modal-parent
+    // 6. Для обранй анимации класс - is-back-animate, для modal-parent
     // Кнопку/Кнопки открытия задавать через querySelectorAll
     const node = [
         [
-            document.querySelectorAll('.header__burger'), 
-            document.querySelector(".big-menu"), 
-            document.querySelector(".big-menu__btn-close"), 
+            document.querySelectorAll('.btn-call-back'), 
+            document.querySelector(".modal-call"), 
+            document.querySelector(".modal-call .modal__btn-close"), 
             "is-open",
         ],
-        [
-            document.querySelectorAll(".btn-callback"),
-            document.querySelector(".callbakc-modal"),
-            document.querySelector(".callbakc-modal__btn-close"),
-            "is-open"
-        ],
-        [
-            document.querySelectorAll(".sucsses-modal-open"),
-            document.querySelector(".sucsses-modal"),
-            document.querySelector(".sucsses-modal__btn-close"),
-            "is-open"
-        ],
-        [
-            document.querySelectorAll(".material-open"),
-            document.querySelector(".material-modal"),
-            document.querySelector(".material__btn-close"),
-            "is-open"
-        ],
-    ];
+    ]
 
     // функция открытия модального окна
     const openModal = (modal, toggleClass) => {
@@ -78,11 +92,16 @@ export default copyLink
     }
     // функция закрытия модального окна
     const closeModal = (modal, toggleClass) => {
-        modal.classList.remove(toggleClass);
+        modal.classList.add("is-back-animate");
+
+        setTimeout(()=>{
+            modal.classList.remove(toggleClass);
+            modal.classList.remove("is-back-animate");
+        }, 400);
     }
 
     // функция для создания событий у элементов модального окна
-    const changeStateModal = (arr, isHidden = false) => {
+    const changeStateModal = (arr, isHidden = true) => {
         // деструктуризация входного массива
         // ===========
         // 1. Кнопка/Кнопки открытия
@@ -92,7 +111,6 @@ export default copyLink
         // 5. Не обязательный параметр
         // ===========
         const [btnOpen, modal, btnClose, activeClass] = arr;
-
         // открытие окна
         if(btnOpen) {
             btnOpen.forEach(btn=> {
@@ -103,7 +121,6 @@ export default copyLink
         if(btnClose) {
             btnClose.addEventListener("click", ()=>closeModal(modal,activeClass));
         }
-        
         // проверка параметра для выполнения функционала скрытия модального окна при клике вне него, и при нажатии кнопки ESC
         if(!isHidden) return;
         // скрытие при клике вне блока
@@ -111,23 +128,21 @@ export default copyLink
             // проверка при клике в любое место на странице
             // если корневой эл. или тот по которому было нажатие соответсвует классу аккордеона
             // тогда оставлять класс, в противном случае класс удаляется
-            if(event?.target?.classList?.value?.includes('modal-parent') && modal) closeModal(modal,activeClass);
+            if (event?.target?.classList?.value?.includes('modal-parent') && modal) closeModal(modal, activeClass);
         });
         // скрытие блока по нажатию на кнопку ESC
         window.addEventListener("keydown", (event)=> {
             if(event.code === "Escape" || event.keyCode === 27 || event.key === "Escape") {
-                modal.classList.remove(activeClass);
+                // modal.classList.remove(activeClass);
+                closeModal(modal,activeClass)
             }
         });
-
-
     }
-
     // вызов функции для навешивания событий на элементы модального окна
     node.forEach(arr=> changeStateModal(arr));
 }
 
-export default modal;
+modal();
 ```
 
 <h2>
