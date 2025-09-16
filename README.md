@@ -36,7 +36,8 @@ export default copyLink
 <h2>
  &#127490; Модальные окна
 </h2>
-```css
+
+```scss
 .modal{
 	left: -200vw;
     &__inner {
