@@ -496,6 +496,46 @@ input.onfocus = function() {
   }
 ```
 
+```javascript
+/// когда необходимо навесить на несколько эл. с выполнением кода (оптимизированная версия)
+const targetBlocks = [
+    { 
+        node: document.querySelector('.footer'), 
+        isInViewport: false, 
+        fn: function() {
+            const header = document.querySelector(".header");
+            if (this.isInViewport) {
+                header.classList.add("is-hidden");
+            } else {
+                header.classList.remove("is-hidden");
+            }
+        }
+    }
+];
+
+const observerChangeStateBlock = () => {
+    targetBlocks.forEach(block => {
+        const callback = (entries) => {
+            entries.forEach(entry => {
+                const isVisible = entry.isIntersecting && entry.intersectionRatio >= 0.5;
+                
+                if (isVisible !== block.isInViewport) {
+                    block.isInViewport = isVisible;
+                    block.fn();
+                }
+            });
+        };
+
+        const observer = new IntersectionObserver(callback, { threshold: 0.5 });
+        if (block.node) {
+            observer.observe(block.node);
+        }
+    });
+};
+
+observerChangeStateBlock();
+```
+
 
 <h2>
   	&#127760; Определение OS у пользователя
