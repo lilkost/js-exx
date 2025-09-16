@@ -569,7 +569,7 @@ input.onfocus = function() {
             if(sliderNode && sliderOptions) {
                 createSlider(sliderNode, sliderOptions);
             }
-            else {
+            else { // опционально лучще выключить при окончании разработки чтобы в консоли не было лишних сообщений
                 console.error(`Ошибка генерации, нету одной из двух частей слайдера: slider - ${sliderNode}, список опций - ${sliderOptions}`)
             }
         });
