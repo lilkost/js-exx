@@ -1174,6 +1174,7 @@ function enableSwipe() {
 initSlider();
 ```
 <h2>Прасинг jwt token</h2>
+
 ```JS
 function decodeJWT(token) {
   const base64Url = token.split('.')[1];
